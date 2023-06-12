@@ -1,7 +1,10 @@
-import React from "react";
-
-const Display = () => {
-  return <div id="display">Display</div>;
+const Display = ({ display }) => {
+  return (
+    <div id="display">
+      <div id="result">{display.result}</div>
+      <div id="input">{display.input}</div>
+    </div>
+  );
 };
 
 export default Display;

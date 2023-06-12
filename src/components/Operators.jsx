@@ -4,7 +4,7 @@ const Operators = () => {
     undo: "C",
     divide: "/",
     multiply: "x",
-    subract: "-",
+    subtract: "-",
     add: "+",
     equals: "=",
   };
