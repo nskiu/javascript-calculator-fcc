@@ -1,0 +1,28 @@
+* {
+  background: whitesmoke;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+#root {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#calculator {
+  height: 400px;
+  width: 350px;
+  border: 1px solid;
+  display: grid;
+  grid-template-rows: 2fr 9fr;
+}
+
+#display {
+  border: 1px solid;
+}
+
+#buttons {
+  border: 1px solid;
+}
