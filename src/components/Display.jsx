@@ -1,8 +1,8 @@
 const Display = ({ display }) => {
   return (
-    <div id="display">
-      <div id="result">{display.result}</div>
-      <div id="input">{display.input}</div>
+    <div id="screen">
+      <div id="log">{display.log}</div>
+      <div id="display">{display.input}</div>
     </div>
   );
 };

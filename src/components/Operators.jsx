@@ -1,4 +1,4 @@
-const Operators = () => {
+const Operators = ({ handleOperation }) => {
   const operators = {
     clear: "AC",
     undo: "C",
@@ -18,6 +18,7 @@ const Operators = () => {
             className="operator"
             id={btn}
             value={operators[btn]}
+            onClick={handleOperation}
           >
             {operators[btn]}
           </button>
