@@ -3,67 +3,56 @@ import Buttons from "./components/buttons";
 import { useEffect, useState } from "react";
 
 const App = () => {
-  const [input, setInput] = useState("");
-  const [operation, setOperation] = useState("");
-  const [display, setDisplay] = useState({ log: input, input: 0 });
+  const [display, setDisplay] = useState({ log: "", output: 0 });
+  const [input, setInput] = useState([]);
+  const [operation, setOperation] = useState([]);
   const [isDecimal, setDecimal] = useState(false);
   const [isNegative, setNegative] = useState(false);
-
   console.log(input);
+
   const handleClick = (event) => {
-    let button = event.target.value;
-
-    switch (button) {
-      case ".":
-        if (isDecimal) return;
-        if (input.length === 0) button = "0.";
-        setDecimal(true);
-        break;
-      case "0":
-        if (input.length === 0) return;
-        break;
+    let value = event.target.value;
+    const noInput = input.length === 0;
+    if (value === ".") {
+      if (isDecimal) return;
+      if (noInput) value = "0.";
+      setDecimal(true);
     }
+    if (value === "0" && noInput) return;
 
-    const value = input + button;
-    setInput(value);
-    setDisplay({ log: display.log + button, input: value });
+    setInput(noInput ? [value] : [...input, value]);
   };
 
   const handleOperation = (event) => {
-    const value = event.target.value;
-    switch (value) {
+    const operator = event.target.value;
+    switch (operator) {
       case "AC":
-        setInput("");
-        setDisplay({ log: "", input: 0 });
-        setDecimal(false);
-        setNegative(false);
+        reset();
         break;
       case "C":
-        if (input === "" || input === "0.") {
-          setInput("");
-          setDecimal(false);
-          setDisplay({ log: "", input: 0 });
-        } else {
-          let undoInput = [...input];
-          const log = [...display.log];
-          const last = undoInput.pop();
-          log.pop();
-          if (last === ".") setDecimal(false);
-          if (last === "-") setNegative(false);
-          undoInput = undoInput.join("");
-          setInput(undoInput);
-          setDisplay({
-            log: log,
-            input: input.length === 1 ? 0 : undoInput,
-          });
-        }
-        break;
-      case "-":
+        const undo = [...input].slice(0, -1);
+        const last = [...input].slice(-1)[0];
+        if (last === ".") setDecimal(false);
 
+        setInput(undo);
+        break;
       default:
         return;
     }
   };
+
+  // change display
+  useEffect(() => {
+    const noInput = input.length === 0;
+    const output = [input.join("")];
+    setDisplay({ log: output, output: noInput ? 0 : output });
+  }, [input]);
+
+  function reset() {
+    setDisplay({ log: "", output: 0 });
+    setInput([]);
+    setDecimal(false);
+  }
 
   return (
     <div id="calculator">
@@ -74,3 +63,18 @@ const App = () => {
 };
 
 export default App;
+
+function calculate(operator, num1, num2) {
+  switch (operator) {
+    case "+":
+      return num1 + num2;
+    case "-":
+      return num1 - num2;
+    case "x":
+      return num1 * num2;
+    case "/":
+      return num1 / num2;
+    default:
+      return;
+  }
+}
