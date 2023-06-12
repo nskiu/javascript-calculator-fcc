@@ -1,10 +1,10 @@
 import Digits from "./Digits";
 import Operators from "./Operators";
 
-const Buttons = () => {
+const Buttons = ({ handleClick }) => {
   return (
     <div id="buttons">
-      <Digits />
+      <Digits handleClick={handleClick} />
       <Operators />
     </div>
   );

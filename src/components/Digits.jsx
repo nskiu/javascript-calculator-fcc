@@ -1,4 +1,4 @@
-const Digits = () => {
+const Digits = ({ handleClick }) => {
   const digits = {
     zero: 0,
     decimal: ".",
@@ -17,7 +17,13 @@ const Digits = () => {
     <div id="digits">
       {numbers.map((num) => {
         return (
-          <button key={num} className="digit" id={num} value={digits[num]}>
+          <button
+            key={num}
+            className="digit"
+            id={num}
+            value={digits[num]}
+            onClick={handleClick}
+          >
             {digits[num]}
           </button>
         );
