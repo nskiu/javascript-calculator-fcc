@@ -1,0 +1,54 @@
+#buttons {
+  display: grid;
+  border: 1px solid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  #digits {
+    height: 100%;
+    width: 100%;
+    grid-column: 1 / -2;
+    grid-row: 2 / 6;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+  #zero {
+    grid-column: 1 / -2;
+  }
+  #zero,
+  #decimal {
+    grid-row: 4;
+  }
+  #one,
+  #two,
+  #three {
+    grid-row: 3;
+  }
+  #four,
+  #five,
+  #six {
+    grid-row: 2;
+  }
+}
+.operator {
+  grid-column: 4;
+}
+#clear,
+#undo,
+#divide {
+  grid-row: 1;
+}
+#clear {
+  grid-column: 1;
+}
+
+#undo {
+  grid-column: 2;
+}
+
+#divide {
+  grid-column: 3;
+}
+#equals {
+  grid-row: 4 / 6;
+}
