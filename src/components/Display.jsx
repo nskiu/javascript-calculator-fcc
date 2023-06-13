@@ -1,8 +1,8 @@
-const Display = ({ display }) => {
+const Display = ({ display, log }) => {
   return (
     <div id="screen">
-      <div id="log">{display.log}</div>
-      <div id="display">{display.output}</div>
+      <div id="log">{log}</div>
+      <div id="display">{display}</div>
     </div>
   );
 };
