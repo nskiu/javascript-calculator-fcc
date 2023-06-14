@@ -9,12 +9,17 @@ const App = () => {
   const [isDecimal, setDecimal] = useState(false);
   const [isResult, setResult] = useState(false);
   const [isNegative, setNegative] = useState(false);
+  const [equals, setEquals] = useState("");
 
-  const noDisplay = display === 0;
+  const noDisplay = display === 0 || display.length === 0 || display === "0";
 
   const handleClick = (event) => {
     let value = event.target.value;
     if (isActive || isNegative) {
+      if (value === "0") {
+        setDisplay(0);
+        return;
+      }
       setDisplay(value);
       setLog(log + value);
       setActive(false);
@@ -55,29 +60,57 @@ const App = () => {
         setNegative(false);
         return;
       case "C":
-        if (noDisplay) return;
+        if (noDisplay || isResult) return;
+
+        if (log.length === 1) {
+          setLog("");
+          setDisplay(0);
+          return;
+        }
         const clear = display.slice(0, -1);
         const clearLog = log.slice(0, -1);
-        const last = display.slice(-1);
+        const last = log.slice(-1);
+
         setLog(clearLog);
-        setDisplay(clear);
+        if (clear === "") {
+          setDisplay(clearLog);
+        } else {
+          setDisplay(clear);
+        }
         if (last === ".") {
           setDecimal(false);
         }
+        const operatorArr = ["+", "x", "/", "-"];
+        const toActive = operatorArr.includes(log.slice(-2, -1));
+        if (operatorArr.includes(last)) {
+          if (last === "-" && toActive) {
+            setNegative(false);
+            return;
+          }
+          if (/\./g.test(log)) {
+            setDecimal(!isDecimal);
+            setActive(false);
+          }
+        }
+        if (toActive) setActive(true);
         return;
       case "=":
-        if (noDisplay) return;
+        if (noDisplay || display[0] === "/" || display[0] === "x") return;
         if (isActive) {
           const prevLog = log.slice(0, -1);
-          setLog(solve(prevLog));
-          setDisplay(solve(prevLog));
+          const calc = solve(prevLog);
+          setLog(log + "=" + calc);
+          setDisplay(calc);
           setResult(true);
           setActive(false);
+          setEquals(calc);
           return;
         }
-        setDisplay(solve(log));
-        setLog(solve(log));
+        const calc = solve(log);
+        setLog(log + "=" + calc);
+        setDisplay(calc);
         setResult(true);
+        setEquals(calc);
         return;
       case "-":
         if (isNegative) return;
@@ -87,13 +120,26 @@ const App = () => {
           setNegative(true);
           return;
         }
-        if (isResult) setResult(false);
+        if (isResult) {
+          setLog(equals + operator);
+          setDisplay(operator);
+          setResult(false);
+          setActive(true);
+          return;
+        }
         setLog(log + operator);
         setActive(true);
         setDecimal(false);
         setDisplay(operator);
         return;
       default:
+        if (isResult) {
+          setLog(equals + operator);
+          setDisplay(operator);
+          setResult(false);
+          setActive(true);
+          return;
+        }
         if (isNegative) {
           const prevLog = log.slice(0, -2);
           setDisplay(operator);
