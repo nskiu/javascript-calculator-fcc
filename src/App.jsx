@@ -60,7 +60,15 @@ const App = () => {
         setNegative(false);
         return;
       case "C":
-        if (noDisplay || isResult) return;
+        if (noDisplay) return;
+
+        if (isResult) {
+          const toDisplay = String(equals).slice(0, -1);
+          setLog(toDisplay);
+          setDisplay(toDisplay);
+          setResult(false);
+          return;
+        }
 
         if (log.length === 1) {
           setLog("");
