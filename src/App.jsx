@@ -1,6 +1,6 @@
 import Display from "./components/display";
 import Buttons from "./components/buttons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const App = () => {
   const [display, setDisplay] = useState(0);
@@ -14,6 +14,7 @@ const App = () => {
   const noDisplay = display === 0 || display.length === 0 || display === "0";
 
   const handleClick = (event) => {
+    if (log === "ERROR") return;
     let value = event.target.value;
     if (isActive || isNegative) {
       if (value === "0") {
@@ -60,6 +61,7 @@ const App = () => {
         setNegative(false);
         return;
       case "CE":
+        if (log === "ERROR") return;
         if (noDisplay) return;
 
         if (isResult) {
@@ -103,6 +105,7 @@ const App = () => {
         if (toActive) setActive(true);
         return;
       case "=":
+        if (log === "ERROR") return;
         if (noDisplay || display[0] === "/" || display[0] === "x") return;
         if (isActive) {
           const prevLog = log.slice(0, -1);
@@ -121,6 +124,7 @@ const App = () => {
         setEquals(calc);
         return;
       case "-":
+        if (log === "ERROR") return;
         if (isNegative) return;
         if (isActive) {
           setDisplay("-");
@@ -141,6 +145,7 @@ const App = () => {
         setDisplay(operator);
         return;
       default:
+        if (log === "ERROR") return;
         if (isResult) {
           setLog(equals + operator);
           setDisplay(operator);
@@ -155,7 +160,7 @@ const App = () => {
           setNegative(false);
           return;
         }
-        if (isResult) setResult(false);
+
         if (isActive) {
           const prevLog = log.slice(0, -1);
           setLog(prevLog + operator);
@@ -170,9 +175,17 @@ const App = () => {
     }
   };
 
+  useEffect(() => {
+    if (display.length > 37 || log.length > 37) {
+      setDisplay("MAXIMUM DIGITS EXCEEDED");
+      setLog("ERROR");
+    }
+  }, [display, log]);
+
   function solve(equation) {
-    let text = equation.replace(/x/g, "*");
-    return eval(text);
+    let output = equation.replace(/x/g, "*");
+    output = output.replace(/--/g, "+");
+    return eval(output);
   }
 
   return (
