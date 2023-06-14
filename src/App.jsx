@@ -1,6 +1,6 @@
 import Display from "./components/display";
 import Buttons from "./components/buttons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const App = () => {
   const [display, setDisplay] = useState(0);
@@ -59,7 +59,7 @@ const App = () => {
         setResult(false);
         setNegative(false);
         return;
-      case "C":
+      case "CE":
         if (noDisplay) return;
 
         if (isResult) {

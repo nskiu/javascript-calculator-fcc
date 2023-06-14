@@ -1,7 +1,7 @@
 const Operators = ({ handleOperation }) => {
   const operators = {
     clear: "AC",
-    undo: "C",
+    undo: "CE",
     divide: "/",
     multiply: "x",
     subtract: "-",

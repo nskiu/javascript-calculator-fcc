@@ -1,16 +1,32 @@
 @import "btn-grid";
-
+$digit-color: #625d52;
+$body-bg: #ffeeee;
+$button-color: #a39e93;
+$main-dark: #27241d;
+$display-color: #fffbea;
+$log-color: #f7c948;
+$font-color: #faf9f7;
+$equals-color: #2cb1bc;
+$clear-color: #d64545;
+$undo-color: #e66a6a;
 * {
-  background: whitesmoke;
   padding: 0;
+  border-collapse: collapse;
   margin: 0;
   box-sizing: border-box;
+  color: $main-dark;
+  border-color: #2b4005;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 #root {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+body {
+  background-color: $body-bg;
+  height: 100vh;
 }
 
 #calculator {
@@ -22,12 +38,80 @@
 }
 
 #screen {
-  border: 1px solid;
-  display: grid;
-  justify-content: end;
+  border: 3px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+  font-size: 1.1rem;
+  padding-right: 0.5rem;
+  background-color: $main-dark;
+}
+button {
+  cursor: pointer;
+  background: none;
+  color: $font-color;
+  font-size: 1rem;
+  border-radius: 8%;
+}
+
+.digit {
+  background-color: $digit-color;
+}
+
+.operator {
+  background-color: $button-color;
+}
+
+#display {
+  color: $display-color;
+  height: 50%;
+  display: flex;
   align-items: center;
 }
 
-button {
-  cursor: pointer;
+#log {
+  color: $log-color;
+  height: 50%;
+  display: flex;
+  align-items: center;
+}
+
+#equals {
+  background-color: $equals-color;
+  font-weight: bold;
+}
+
+#clear {
+  background-color: $clear-color;
+}
+
+#undo {
+  background-color: $undo-color;
+}
+#buttons {
+  background-color: $main-dark;
+  :hover {
+    color: #423d33;
+    border-color: #507712;
+  }
+}
+
+footer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  bottom: 60px;
+  flex-wrap: wrap;
+  p {
+    color: $digit-color;
+  }
+  a {
+    color: $digit-color;
+  }
+  a:hover {
+    color: $equals-color;
+  }
 }
